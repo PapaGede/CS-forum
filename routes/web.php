@@ -32,6 +32,7 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 Route::post('/store','ajaxController@store');
+Route::post('/suggest','ajaxController@threadSuggest');
 Route::get('/dashboard','adminController@dashboard');
 Route::get('/newThreads','adminController@newThreads');
 Route::get('/admin/banned','adminController@banned');
@@ -39,4 +40,8 @@ Route::get('/admin/user','adminController@user');
 Route::get('/admin/userdetail/{id}','adminController@userdetail');
 Route::get('/threadTypeSuggest','pagesController@threadTypeSuggest');
 Route::get('/threadTypeReview','adminController@threadTypeReview');
-
+Route::post('/changeStatus','ajaxController@changeStatus');
+Route::get('/admin/level3','adminController@level3');
+Route::get('/markAsRead',function(){
+ auth()->user()->unreadNotifications->markAsRead();
+});

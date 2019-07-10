@@ -7,7 +7,8 @@ use Illuminate\Http\Request;
 class pagesController extends Controller
 {
     public function userProfile(){
-        return view('front.profile');
+        $thread = thread::where('user_id',auth()->user()->id)->orderBy('created_at','asc')->get();
+        return view('front.profile')->with('thread',$thread);
     }
     public function threadType(){
         $Thread  = thread::select('type')->distinct()->get();

@@ -13,7 +13,8 @@ class adminController extends Controller
         $this->middleware('isAdmin');
     }
     public function dashboard(){
-        return view('auth2.index');
+        $thread = thread::all();
+        return view('auth2.index')->with('thread',$thread);
     }
     public function newThreads(){
         $Thread = Thread::all();
@@ -35,5 +36,8 @@ class adminController extends Controller
     public function threadTypeReview(){
         $type = type::all();
         return view('auth2.threadTypeReview')->with('type',$type);
+    }
+    public function level3(){
+        return view('auth2.level3');
     }
 }

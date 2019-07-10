@@ -18,11 +18,9 @@
                             </div>
                         </header>
                         <h3>{{Auth::user()->name}}</h3>
-                        <div class="desc">
-                            Lorem ipsum dolor sit amet, consectetur adipisicing elit et cupiditate deleniti.
-                        </div>
+                       
                         <div class="contacts">
-                            <a href=""><i class="fa fa-plus"></i></a>
+                            <a href="/thread/create"><i class="fa fa-plus"></i></a>
                             <a href=""><i class="fa fa-whatsapp"></i></a>
                         <a href="{{Auth::user()->email}}"><i class="fa fa-envelope"></i></a>
                             <div class="clear"></div>
@@ -43,63 +41,44 @@
                 </ul>
                 <!-- Tab panes -->
                 <div class="tab-content">
-                    <div class="tab-pane active" id="home" role="tabpanel">
-                        <div class="card-body">
-                            <div class="profiletimeline">
-                                <div class="sl-item">
-                                    <div class="sl-left"> <img src="images/users/avatar-1.jpg" alt="user" class="img-circle" /> </div>
-                                    <div class="sl-right">
-                                        <div><a href="#" class="link">Michael Qin</a> <span class="sl-date">5 minutes ago</span>
-                                            <p>assign a new task <a href="#"> Design weblayout</a></p>
-                                            <div class="row">
-                                                <div class="col-lg-3 col-md-6 m-b-20"><img src="images/big/img1.jpg" class="img-responsive radius" /></div>
-                                                <div class="col-lg-3 col-md-6 m-b-20"><img src="images/big/img2.jpg" class="img-responsive radius" /></div>
-                                                <div class="col-lg-3 col-md-6 m-b-20"><img src="images/big/img3.jpg" class="img-responsive radius" /></div>
-                                                <div class="col-lg-3 col-md-6 m-b-20"><img src="images/big/img4.jpg" class="img-responsive radius" /></div>
+                        <div class="tab-pane active" id="home" role="tabpanel">
+                                <div class="card-body">
+                                    <div class="profiletimeline">
+                                        @if(count($thread))
+                                       @foreach($thread as $threads)
+                                       <?php
+                                       $dt     = new Carbon($threads->created_at);
+                                      
+                                    // 10 days ago
+                                       $date = $dt->diffForHumans();     
+                                       ?>
+                                        <div class="sl-item">
+                                            <div class="sl-left"> <img src="https://cdn4.iconfinder.com/data/icons/browser-ui-small-size-optimized-set/154/user-login-human-man-body-512.png" alt="user" class="img-circle" /> </div>
+                                            <div class="sl-right">
+                                                <div><a href="#" class="link">{{auth()->user()->name}}</a> <span class="sl-date">{{$date}}</span> <span class="sl-date">{{Carbon::parse($threads->created_at)->format('l jS \of F Y h:i A') }}</span>
+                                                    <p class="m-t-10">{!!$threads->thread!!}</p>
+                                                    <div><p>{!! \Michelf\Markdown::defaultTransform($threads->code) !!}</p></div>
+                                                </div>
+                                                <div class="like-comm m-t-20"> <a href="javascript:void(0)" class="link m-r-10">{{count($threads->comments)}} comment</a> <a href="javascript:void(0)" class="link m-r-10"><i class="fa fa-heart text-primary"></i> 5 Likes</a><a href="javascript:void(0)" class="link m-r-10">{{$threads->type['name']}}</a><a  style="color:white" class="btn btn-danger btn-rounded">Delete Thread</a> <a style="color:white" class="btn btn-dark btn-rounded">Message With Thread</a> </div>
                                             </div>
-                                            <div class="like-comm"> <a href="javascript:void(0)" class="link m-r-10">2 comment</a> <a href="javascript:void(0)" class="link m-r-10"><i class="fa fa-heart text-danger"></i> 5 Love</a> </div>
                                         </div>
-                                    </div>
-                                </div>
-                                <hr>
-                                <div class="sl-item">
-                                    <div class="sl-left"> <img src="images/users/avatar-2.jpg" alt="user" class="img-circle" /> </div>
-                                    <div class="sl-right">
-                                        <div> <a href="#" class="link">Michael Qin</a> <span class="sl-date">5 minutes ago</span>
-                                            <div class="m-t-20 row">
-                                                <div class="col-md-3 col-xs-12"><img src="images/big/img1.jpg" alt="user" class="img-responsive radius" /></div>
-                                                <div class="col-md-9 col-xs-12">
-                                                    <p> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent libero. Sed cursus ante dapibus diam. </p> <a href="#" class="btn btn-success"> Design weblayout</a></div>
+                                        <hr>
+                                        @endforeach
+                                        @else
+                                        <div class="sl-item">
+                                                
+                                                <div class="sl-right">
+                                                    <div><a href="#" class="link">{{auth()->user()->name}}</a> 
+                                                        <p class="m-t-10">{{auth()->user()->name}} has no threads</p>
+                                                    </div>
+                                                   
+                                                </div>
                                             </div>
-                                            <div class="like-comm m-t-20"> <a href="javascript:void(0)" class="link m-r-10">2 comment</a> <a href="javascript:void(0)" class="link m-r-10"><i class="fa fa-heart text-danger"></i> 5 Love</a> </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <hr>
-                                <div class="sl-item">
-                                    <div class="sl-left"> <img src="images/users/avatar-3.jpg" alt="user" class="img-circle" /> </div>
-                                    <div class="sl-right">
-                                        <div><a href="#" class="link">Michael Qin</a> <span class="sl-date">5 minutes ago</span>
-                                            <p class="m-t-10"> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent libero. Sed cursus ante dapibus diam. Sed nisi. Nulla quis sem at nibh elementum imperdiet. Duis sagittis ipsum.
-                                                Praesent mauris. Fusce nec tellus sed augue semper </p>
-                                        </div>
-                                        <div class="like-comm m-t-20"> <a href="javascript:void(0)" class="link m-r-10">2 comment</a> <a href="javascript:void(0)" class="link m-r-10"><i class="fa fa-heart text-danger"></i> 5 Love</a> </div>
-                                    </div>
-                                </div>
-                                <hr>
-                                <div class="sl-item">
-                                    <div class="sl-left"> <img src="images/users/avatar-4.jpg" alt="user" class="img-circle" /> </div>
-                                    <div class="sl-right">
-                                        <div><a href="#" class="link">Michael Qin</a> <span class="sl-date">5 minutes ago</span>
-                                            <blockquote class="m-t-10">
-                                                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt
-                                            </blockquote>
-                                        </div>
+                                        @endif
+                                       
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    </div>
                     <!--second tab-->
                     <div class="tab-pane" id="profile" role="tabpanel">
                         <div class="card-body">

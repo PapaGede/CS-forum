@@ -24,41 +24,7 @@
                         <!-- End Left sidebar -->
                         <div class="inbox-rightbar">
 
-                            <div class="" role="toolbar">
-                                <div class="btn-group">
-                                    <button type="button" class="btn btn-light waves-effect"><i class="mdi mdi-archive font-18 vertical-middle"></i></button>
-                                    <button type="button" class="btn btn-light waves-effect"><i class="mdi mdi-alert-octagon font-18 vertical-middle"></i></button>
-                                    <button type="button" class="btn btn-light waves-effect"><i class="mdi mdi-delete-variant font-18 vertical-middle"></i></button>
-                                </div>
-                                <div class="btn-group">
-                                    <button type="button" class="btn btn-light dropdown-toggle waves-effect" data-toggle="dropdown" aria-expanded="false">
-                                                                       <i class="mdi mdi-folder font-18 vertical-middle"></i>
-                                                                       <b class="caret m-l-5"></b>
-                                                                   </button>
-                                    <div class="dropdown-menu">
-                                        <span class="dropdown-header">Move to</span>
-                                        <a class="dropdown-item" href="javascript: void(0);">Social</a>
-                                        <a class="dropdown-item" href="javascript: void(0);">Promotions</a>
-                                        <a class="dropdown-item" href="javascript: void(0);">Updates</a>
-                                        <a class="dropdown-item" href="javascript: void(0);">Forums</a>
-                                    </div>
-                                </div>
-                                <div class="btn-group">
-                                    <button type="button" class="btn btn-light dropdown-toggle waves-effect" data-toggle="dropdown" aria-expanded="false">
-                                                                       <i class="mdi mdi-label font-18 vertical-middle"></i>
-                                                                       <b class="caret m-l-5"></b>
-                                                                   </button>
-                                    <div class="dropdown-menu">
-                                        <span class="dropdown-header">Label as:</span>
-                                        <a class="dropdown-item" href="javascript: void(0);">Updates</a>
-                                        <a class="dropdown-item" href="javascript: void(0);">Social</a>
-                                        <a class="dropdown-item" href="javascript: void(0);">Promotions</a>
-                                        <a class="dropdown-item" href="javascript: void(0);">Forums</a>
-                                    </div>
-                                </div>
-
-                               
-                            </div>
+                           
 
                             <div class="mt-4">
                                     {!!Form::open()!!}
@@ -66,7 +32,7 @@
                                         <div class="col-md-5">
                                             <div class="form-group">
                                                 <label>Type</label>
-                                                {{Form::text('type','',['class'=>'form-control'])}}
+                                                {{Form::text('name','',['class'=>'form-control'])}}
                                             </div>
                                         </div>
                                        
@@ -82,7 +48,7 @@
                                         <div class="col-md-12">
                                             <div class="form-group">
                                                 <label>Details</label>
-                                                <textarea name="details" rows="8" cols="" class="form-control" id="article-ckeditor"  style="height:300px">
+                                                <textarea name="detail" rows="8" cols="" class="form-control" id="article-ckeditor"  style="height:300px">
                                                     </textarea>
                                             </div>
                                         </div>
@@ -122,7 +88,7 @@ headers: {
     var data = $('form').serialize();
     $.ajax({
     type: "POST",
-    url: '/store',
+    url: '/suggest',
     data: data,
     beforeSend: function(){
         swal('Loading...');

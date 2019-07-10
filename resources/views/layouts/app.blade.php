@@ -22,6 +22,7 @@
     <link href="/css/helper.css" rel="stylesheet">
     <link href="/css/style.css" rel="stylesheet">
     <script src="/js/lib/jquery/jquery.min.js"></script>
+    <script src="https://js.pusher.com/4.1/pusher.min.js"></script>
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:** -->
@@ -40,8 +41,8 @@
     <!-- Main wrapper  -->
     <div id="main-wrapper">
         <!-- header header  -->
-        <div class="header" style="color:white;background: linear-gradient(to right, #ff9900 0%, #ff0066 100%);">
-            <nav class="navbar top-navbar navbar-expand-md navbar-light">
+        <div class="header" style="color:white;">
+            <nav class="navbar top-navbar navbar-expand-md navbar-light" style="background: linear-gradient(to right, #ff0000 0%, #660066 100%);">
                 <!-- Logo -->
                 <div class="navbar-header" style="background-color:black">
                     <a class="navbar-brand" href="index.html" style="color:white">
@@ -80,36 +81,35 @@
                                         </form>
                                     </li>
                                     <li class="col-lg-3 col-xlg-3 m-b-30">
-                                        <h4 class="m-b-20">List style</h4>
+                                        <h4 class="m-b-20"></h4>
                                         <!-- List style -->
                                         <ul class="list-style-none">
-                                            <li><a href="javascript:void(0)"><i class="fa fa-check text-success"></i> This Is Another Link</a></li>
-                                            <li><a href="javascript:void(0)"><i class="fa fa-check text-success"></i> This Is Another Link</a></li>
-                                            <li><a href="javascript:void(0)"><i class="fa fa-check text-success"></i> This Is Another Link</a></li>
-                                            <li><a href="javascript:void(0)"><i class="fa fa-check text-success"></i> This Is Another Link</a></li>
-                                            <li><a href="javascript:void(0)"><i class="fa fa-check text-success"></i> This Is Another Link</a></li>
+                                           
+                                            @foreach(App\type::all() as $types)
+                                            <li><a href="type"><i class="fa fa-check text-success"></i>{{$types->name}}</a></li>
+                                            
+                                           @endforeach
                                         </ul>
                                     </li>
                                     <li class="col-lg-3 col-xlg-3 m-b-30">
-                                        <h4 class="m-b-20">List style</h4>
+                                        <h4 class="m-b-20">Social Media</h4>
                                         <!-- List style -->
                                         <ul class="list-style-none">
-                                            <li><a href="javascript:void(0)"><i class="fa fa-check text-success"></i> This Is Another Link</a></li>
-                                            <li><a href="javascript:void(0)"><i class="fa fa-check text-success"></i> This Is Another Link</a></li>
-                                            <li><a href="javascript:void(0)"><i class="fa fa-check text-success"></i> This Is Another Link</a></li>
-                                            <li><a href="javascript:void(0)"><i class="fa fa-check text-success"></i> This Is Another Link</a></li>
-                                            <li><a href="javascript:void(0)"><i class="fa fa-check text-success"></i> This Is Another Link</a></li>
+                                            <li><a href="javascript:void(0)"><i class="fa fa-check text-success"></i>Facebook</a></li>
+                                            <li><a href="javascript:void(0)"><i class="fa fa-check text-success"></i>twitter</a></li>
+                                            <li><a href="javascript:void(0)"><i class="fa fa-check text-success"></i>Google</a></li>
+                                            <li><a href="javascript:void(0)"><i class="fa fa-check text-success"></i>LinkedIn</a></li>
                                         </ul>
                                     </li>
                                     <li class="col-lg-3 col-xlg-3 m-b-30">
-                                        <h4 class="m-b-20">List style</h4>
+                                        <h4 class="m-b-20">Devflow</h4>
                                         <!-- List style -->
                                         <ul class="list-style-none">
-                                            <li><a href="javascript:void(0)"><i class="fa fa-check text-success"></i> This Is Another Link</a></li>
-                                            <li><a href="javascript:void(0)"><i class="fa fa-check text-success"></i> This Is Another Link</a></li>
-                                            <li><a href="javascript:void(0)"><i class="fa fa-check text-success"></i> This Is Another Link</a></li>
-                                            <li><a href="javascript:void(0)"><i class="fa fa-check text-success"></i> This Is Another Link</a></li>
-                                            <li><a href="javascript:void(0)"><i class="fa fa-check text-success"></i> This Is Another Link</a></li>
+                                            <li><a href="javascript:void(0)"><i class="fa fa-check text-success"></i>About</a></li>
+                                            <li><a href="javascript:void(0)"><i class="fa fa-check text-success"></i>Faqs</a></li>
+                                            <li><a href="javascript:void(0)"><i class="fa fa-check text-success"></i>Terms and Conditions</a></li>
+                                            <li><a href="javascript:void(0)"><i class="fa fa-check text-success"></i>Help</a></li>
+                                            
                                         </ul>
                                     </li>
                                 </ul>
@@ -117,18 +117,21 @@
                         </li>
                         <!-- End Messages -->
                     </ul>
+                   
                     <!-- User profile and search -->
                     <ul class="navbar-nav my-lg-0" >
 
                         <!-- Search -->
-                        <li class="nav-item hidden-sm-down search-box"> <a class="nav-link hidden-sm-down text-muted  " href="javascript:void(0)"><i class="ti-search"></i></a>
-                            <form class="app-search">
-                                <input type="text" class="form-control" placeholder="Search here"> <a class="srh-btn"><i class="ti-close"></i></a> </form>
-                        </li>
+                       
                         <!-- Comment -->
+                        <input id="user" value="{{auth()->user()->id}}" hidden>
                         <li class="nav-item dropdown" >
-                            <a class="nav-link dropdown-toggle text-muted text-muted  " href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="fa fa-bell"></i>
-								<div class="notify"> <span class="heartbit"></span> <span class="point"></span> </div>
+                            <a class="nav-link dropdown-toggle text-muted text-muted  " id="markAsRead" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i style="color:black;"class="fa fa-bell"></i>
+								<div class="notify" >
+                                    @if(count(Auth()->user()->unreadNotifications))
+                                     <span class="heartbit not"></span> <span class="point not1"></span> 
+                                    @endif
+                                    </div>
 							</a>
                             <div class="dropdown-menu dropdown-menu-right mailbox animated zoomIn">
                                 <ul>
@@ -137,39 +140,19 @@
                                     </li>
                                     <li>
                                         <div class="message-center">
+                                            <div id="div1">
                                             <!-- Message -->
-                                            <a href="#">
-                                                <div class="btn btn-danger btn-circle m-r-10"><i class="fa fa-link"></i></div>
-                                                <div class="mail-contnet">
-                                                    <h5>This is title</h5> <span class="mail-desc">Just see the my new admin!</span> <span class="time">9:30 AM</span>
-                                                </div>
-                                            </a>
+                                            @forelse(auth()->user()->unreadNotifications as $notification)
+                                            
+                                            @include('layouts.notification.'.class_basename($notification->type))
+                                           @empty
+                                           No unread notifications here
+                                            @endforelse
                                             <!-- Message -->
-                                            <a href="#">
-                                                <div class="btn btn-success btn-circle m-r-10"><i class="ti-calendar"></i></div>
-                                                <div class="mail-contnet">
-                                                    <h5>This is another title</h5> <span class="mail-desc">Just a reminder that you have event</span> <span class="time">9:10 AM</span>
-                                                </div>
-                                            </a>
-                                            <!-- Message -->
-                                            <a href="#">
-                                                <div class="btn btn-info btn-circle m-r-10"><i class="ti-settings"></i></div>
-                                                <div class="mail-contnet">
-                                                    <h5>This is title</h5> <span class="mail-desc">You can customize this template as you want</span> <span class="time">9:08 AM</span>
-                                                </div>
-                                            </a>
-                                            <!-- Message -->
-                                            <a href="#">
-                                                <div class="btn btn-primary btn-circle m-r-10"><i class="ti-user"></i></div>
-                                                <div class="mail-contnet">
-                                                    <h5>This is another title</h5> <span class="mail-desc">Just see the my admin!</span> <span class="time">9:02 AM</span>
-                                                </div>
-                                            </a>
+                                            </div>
                                         </div>
                                     </li>
-                                    <li>
-                                        <a class="nav-link text-center" href="javascript:void(0);"> <strong>Check all notifications</strong> <i class="fa fa-angle-right"></i> </a>
-                                    </li>
+                                   
                                 </ul>
                             </div>
                         </li>
@@ -276,7 +259,15 @@
                             <ul aria-expanded="false" class="collapse">
                                 <li><a href="/admin/add/admin">Add new Admin</a></li>
                                 <li><a href="/thread"><i class="fa fa-lock"></i> Change Password</a></li>
-                                <li><a href="/thread/create">Level 3</a></li>
+                                <li><a href="/admin/level3">Level 3</a></li>
+                                
+                            </ul>
+                        </li>
+                        <li> <a class="has-arrow  " href="#" aria-expanded="false"><i class="fa fa-bell"></i><span class="hide-menu">Notifications</span></a>
+                            <ul aria-expanded="false" class="collapse">
+                                <li><a href="/admin/add/admin"><i class="fa fa-send"></i> Send</a></li>
+                                <li><a href="/thread"><i class="fa fa-trash"></i> Delete </a></li>
+                                <li><a href="/admin/level3"><i class="	fa fa-group"></i> Broadcast</a></li>
                                 
                             </ul>
                         </li>
@@ -360,7 +351,7 @@
 
 
     <script src="/js/custom.min.js"></script>
-
+    <script src="/js/main.js"></script>
 
 
 

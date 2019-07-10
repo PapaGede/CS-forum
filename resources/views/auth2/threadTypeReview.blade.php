@@ -64,7 +64,11 @@
                                     </td>
                                     <td>{{$types->user->name}}</td>
                                     <td><span>{{$types->name}}</span></td>
-                                    <td><span>verify</span></td>
+                                    @if($types->isVerified)
+                                    <td><button class="btn btn-danger" verify="{{$types->id}}" id="status">Undo</button></td>
+                                    @else
+                                    <td><button class="btn btn-primary" verify="{{$types->id}}" id="status">Verify</button></td>
+                                    @endif
                                     @if($types->isVerified)
                                     <td><span class="badge badge-success">Verified</span></td>
                                     @else
@@ -80,6 +84,44 @@
             </div>
         </div>
     </div>
-  
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+         
+          $(document).delegate('#status','click', function(e) {
+        e.preventDefault(); 
+        $(this).removeClass('btn btn-primary').addClass('btn btn-warning');
+        var id = $(this).attr('verify');
+        $.ajax({
+        type: "POST",
+        url: '/changeStatus',
+        data: {id:id},
+        beforeSend: function(){
+            swal('Loading...');
+        },
+        success: function(data) {
+            //swal("Good job!", data.response, "success");
+            //$(this).html('Unused');
+           // $('.tdl-holder').load('/threadTypeReview' + '.tdl-content')
+          swal('Great',data.response,'success');
+         //console.log(data);
+        },
+        error: function(errors,status,xhr){
+            var err = errors.responseJSON.errors;
+           $.each(err,function(key,value){
+            sweetAlert("Oops...", value+"!!", "error");
+           }) ;
+          
+        }
+    });
+    });
+    
+        } );
+    </script>
+     
 
 @endsection

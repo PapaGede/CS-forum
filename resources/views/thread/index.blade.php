@@ -35,7 +35,7 @@
                         @endif
                         <div class="sl-right">
                         <div><a href="#" class="link">{{$Threads->user->name}} <span><small>{{$date}}</small></span></a>
-                                <small>{!! $Threads->subject !!}</small>
+                                <small>{!! $Threads->subject !!}</small> - {{$Threads->type['name']}}
                                 <a href="/thread/{{$Threads['id']}}"><p class="m-t-10">{!! $Threads->thread !!}</p></a>
                                 <div><p>{!! \Michelf\Markdown::defaultTransform($Threads->code) !!}</p></div>
                             </div>

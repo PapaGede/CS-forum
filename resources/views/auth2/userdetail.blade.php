@@ -20,7 +20,7 @@
                         </header>
                         <h3>{{$user->name}}</h3>
                         <div class="desc">
-                            Lorem ipsum dolor sit amet, consectetur adipisicing elit et cupiditate deleniti.
+                           <!-- Lorem ipsum dolor sit amet, consectetur adipisicing elit et cupiditate deleniti.-->
                         </div>
                         <div class="contacts">
                             <a href=""><i class="fa fa-plus"></i></a>

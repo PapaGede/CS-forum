@@ -1,10 +1,12 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App\Notifications\RepliedToThread;
 use App\Comment;
 use App\thread;
 use Illuminate\Http\Request;
+use Pusher;
+
 
 class CommentController extends Controller
 {
@@ -20,7 +22,20 @@ class CommentController extends Controller
         $comment->body = $request->body;
         $comment->user_id = auth()->user()->id;
         $thread->comments()->save($comment);
-
+        $thread->user->notify(new RepliedToThread($thread));
+        $options = array(
+            'cluster' => 'eu',
+            'encrypted' => true
+          );
+          $pusher = new Pusher\Pusher(
+            'b8e7ae21f8520de4fba1',
+            '4388019d413d9d865ae1',
+            '527093',
+            $options
+          );
+          
+          $data['user'] = $thread->user->id;
+          $pusher->trigger('my-channel', 'my-event', $data);
         return back();
     }
   
